@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.27.201.95:3306/test
+    username: root
+    password: abc123
+    platform: mysql
+    initialization-mode: always
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
