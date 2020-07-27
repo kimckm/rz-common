@@ -15,16 +15,16 @@
             <fileMode>0644</fileMode>
         </fileSet>
 
-        <fileSet>
-            <directory>${project.build.directory}/lib</directory>
-            <outputDirectory>lib</outputDirectory>
-            <fileMode>0755</fileMode>
-        </fileSet>
+<!--        <fileSet>-->
+<!--            <directory>${project.build.directory}/lib</directory>-->
+<!--            <outputDirectory>lib</outputDirectory>-->
+<!--            <fileMode>0755</fileMode>-->
+<!--        </fileSet>-->
 
         <!-- 将项目启动jar打包到/目录中 -->
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory></outputDirectory>
+            <outputDirectory>.</outputDirectory>
             <fileMode>0755</fileMode>
             <includes>
                 <include>${project.build.finalName}.jar</include>
