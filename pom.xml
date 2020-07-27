@@ -21,6 +21,7 @@
         <module>rz-gateway</module>
         <module>rz-security</module>
         <module>rz-web</module>
+        <module>rz-pure</module>
     </modules>
 
     <properties>

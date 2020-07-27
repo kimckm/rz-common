@@ -1,11 +1,9 @@
 spring:
-  profiles:
-    active: dev
   application:
-    name: web
+    name: pure
 
 server:
-  port: 8900
+  port: 8901
 
 eureka:
   client:
