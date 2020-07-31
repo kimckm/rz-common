@@ -25,7 +25,7 @@
         <fileSet>
             <directory>${project.build.directory}</directory>
             <outputDirectory>.</outputDirectory>
-            <fileMode>0755</fileMode>
+            <fileMode>0444</fileMode>
             <includes>
                 <include>${project.build.finalName}.jar</include>
             </includes>
