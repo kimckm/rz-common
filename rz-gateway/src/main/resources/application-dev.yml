@@ -15,3 +15,8 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
+        routes:
+        - id: web_route
+          uri: lb://web
+          predicates:
+          - Path: /web
