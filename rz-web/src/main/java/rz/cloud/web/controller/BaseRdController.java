@@ -33,27 +33,21 @@ public abstract class BaseRdController<T, S extends IService<T>> {
     public Object page(@RequestParam Map<String, Object> params) {
         Wrapper<T> wrapper = this.doWrapper(params);
 
-        Object pageSize = params.get("pageSize");
+        Long pageSize = (Long) params.get("pageSize");
         if (Objects.isNull(pageSize)) {
-            pageSize = "20";
+            pageSize = 20L;
         }
 
-        if ("0".equals(pageSize.toString())) { // pageSize为0, 表示不分页
+        if (pageSize == 0L) { // pageSize为0, 表示不分页
             return service.list(wrapper);
         }
-
-        long size = Long.parseLong(pageSize.toString());
-
-        Page<T> page = new Page<>();
-        page.setSize(size);
 
         Long current = (Long) params.get("current");
         if (Objects.isNull(current)) {
             current = 1L;
         }
-        page.setCurrent(current);
 
-        Page<T> resultPage = service.page(page, wrapper);
+        Page<T> resultPage = service.page(new Page<>(current, pageSize), wrapper);
 
         Map<String, Object> responseMap = new HashMap<>();
         responseMap.put("list", resultPage.getRecords());
