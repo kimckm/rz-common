@@ -23,6 +23,7 @@
         <module>rz-web</module>
         <module>rz-pure</module>
 		<module>rz-hotel</module>
+		<module>rz-order</module>
     </modules>
 
     <properties>
