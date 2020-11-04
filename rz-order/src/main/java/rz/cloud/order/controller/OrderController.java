@@ -1,8 +1,12 @@
 package rz.cloud.order.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import rz.cloud.order.controller.dto.OrderAddDto;
 import rz.cloud.order.controller.dto.OrderQueryDto;
@@ -28,11 +32,12 @@ public class OrderController {
 
 	@PatchMapping("/{id}")
 	public Order update(@PathVariable Integer id, @RequestBody OrderUpdateDto orderUpdateDto) {
-		orderService.lambdaUpdate()
-			.eq(Order::getId, id)
-			.update(orderUpdateDto);
+		orderUpdateDto.setId(id);
+		if (orderService.updateById(orderUpdateDto)) {
+			return orderService.getById(id);
+		}
 
-		return orderService.getById(id);
+		return null;
 	}
 
 	@GetMapping
@@ -41,10 +46,7 @@ public class OrderController {
 		page.setCurrent(orderQueryDto.getCurrent());
 		page.setSize(orderQueryDto.getSize());
 
-		// TODO 测试是否需要判断空值
-		return orderService.lambdaQuery()
-			.like(Order::getNo, orderQueryDto.getNo())
-			.page(page);
+		return orderService.page(page, new QueryWrapper<>(orderQueryDto));
 	}
 
 	@GetMapping("/{id}")

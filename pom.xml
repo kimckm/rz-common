@@ -19,7 +19,8 @@
     <modules>
         <module>rz-eureka</module>
         <module>rz-gateway</module>
-        <module>rz-security</module>
+        <module>rz-config</module>
+        <module>rz-auth</module>
         <module>rz-web</module>
         <module>rz-pure</module>
 		<module>rz-hotel</module>
