@@ -8,7 +8,6 @@
         <groupId>rz.cloud</groupId>
         <artifactId>rz-common</artifactId>
         <version>1.0</version>
-        <relativePath />
     </parent>
 
     <artifactId>rz-config</artifactId>
