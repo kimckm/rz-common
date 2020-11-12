@@ -8,9 +8,9 @@ spring:
     config:
       server:
         git:
-          uri: /home/kim/conf
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8888/eureka/
+          uri: https://github.com/kimckm/config-repo.git
+# 默认值是 http://localhost:8761/eureka/
+# eureka:
+#   client:
+#     serviceUrl:
+#       defaultZone: http://127.0.0.1:8761/eureka/
