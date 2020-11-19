@@ -41,12 +41,12 @@ public class OrderController {
 	}
 
 	@GetMapping
-	public IPage<Order> query(OrderQueryDto orderQueryDto) {
+	public Object query(OrderQueryDto orderQueryDto) {
 		IPage<Order> page = new Page<>();
 		page.setCurrent(orderQueryDto.getCurrent());
 		page.setSize(orderQueryDto.getSize());
 
-		return orderService.page(page, new QueryWrapper<>(orderQueryDto));
+		return orderService.list();
 	}
 
 	@GetMapping("/{id}")

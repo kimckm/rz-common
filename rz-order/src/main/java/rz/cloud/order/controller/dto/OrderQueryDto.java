@@ -8,7 +8,7 @@ import rz.cloud.order.model.Order;
 @Data
 public class OrderQueryDto extends Order {
 
-	private Integer current;
-	private Integer size;
+	private Integer current = 1;
+	private Integer size = 20;
 
 }

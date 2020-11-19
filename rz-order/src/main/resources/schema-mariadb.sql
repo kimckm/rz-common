@@ -1,4 +1,4 @@
-drop table if exists t_web;
+drop table if exists t_order;
 
 create table t_order (
   id int primary key auto_increment,
