@@ -1,22 +1,8 @@
-server:
-  port: 9999
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8888/eureka/
-
 spring:
-  application:
-    name: gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lowerCaseServiceId: true
-        routes:
-        - id: web_route
-          uri: lb://web
-          predicates:
-          - Path: /web
+      routes:
+      - id: path_route
+        uri: http://httpbin.org
+        predicates:
+        - Path=/forms/{path}
