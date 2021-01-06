@@ -25,6 +25,7 @@
         <module>rz-pure</module>
 		<module>rz-hotel</module>
 		<module>rz-order</module>
+        <module>rz-exam</module>
     </modules>
 
     <properties>

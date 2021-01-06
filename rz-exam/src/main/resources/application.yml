@@ -1,0 +1,20 @@
+server:
+  port: 12276
+
+spring:
+#  profiles:
+#    active: dev
+  application:
+    name: exam
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://8.135.66.238:3306/exam
+    username: root
+    password: Abcd1234
+    platform: mariadb
+    initialization-mode: always
+
+#eureka:
+#  client:
+#    register-with-eureka: false
+#    fetch-registry: false

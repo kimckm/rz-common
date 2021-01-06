@@ -5,4 +5,6 @@ spring:
       - id: path_route
         uri: http://httpbin.org
         predicates:
-        - Path=/forms/{path}
+        - Path=/get/**
+#        filters:
+#        - StripPrefix=1
