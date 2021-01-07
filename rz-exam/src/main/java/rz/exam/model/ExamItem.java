@@ -10,7 +10,9 @@ public class ExamItem {
 	private long id;
 	private long examId;
 	private long questionId;
-	private QuestionTypeEnum questionType;
 	private int seq;
+
+	@TableField("question_type")
+	private QuestionTypeEnum questionType;
 
 }
