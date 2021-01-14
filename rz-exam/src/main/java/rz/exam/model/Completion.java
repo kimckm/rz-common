@@ -1,22 +1,29 @@
 package rz.exam.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 填空题
  */
 @Data
-@TableName("t_completion")
 public class Completion {
 
 	private long id;
 	private String question;
 
-	@TableField("create_at")
 	private LocalDateTime createAt;
+
+	private List<CompletionOption> correct;
+
+}
+
+@Data
+class CompletionOption {
+
+	private String code;
+	private String expected;
 
 }

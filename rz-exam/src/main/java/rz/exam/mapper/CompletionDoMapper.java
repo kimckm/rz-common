@@ -2,8 +2,8 @@ package rz.exam.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import rz.exam.model.CompletionOption;
+import rz.exam.model.CompletionDO;
 
 @Mapper
-public interface CompletionOptionMapper extends BaseMapper<CompletionOption> {
+public interface CompletionDoMapper extends BaseMapper<CompletionDO> {
 }
