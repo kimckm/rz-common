@@ -19,11 +19,3 @@ public class Completion {
 	private List<CompletionOption> correct;
 
 }
-
-@Data
-class CompletionOption {
-
-	private String code;
-	private String expected;
-
-}

@@ -1,6 +1,9 @@
 package rz.exam.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import rz.exam.mapper.CompletionDoMapper;
 import rz.exam.model.Completion;
 import rz.exam.model.CompletionDO;
+import rz.exam.model.CompletionOption;
 import rz.exam.service.CompletionService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class CompletionServiceImpl implements CompletionService {
 
@@ -27,7 +33,13 @@ public class CompletionServiceImpl implements CompletionService {
 		return doList.stream().map(d -> {
 			Completion c = new Completion();
 			BeanUtils.copyProperties(d, c);
-			// TODO 数据转换
+			try {
+				ObjectMapper om = new ObjectMapper();
+				List<CompletionOption> completionOptionList = om.readValue(d.getCorrect(), new TypeReference<List<CompletionOption>>() {});
+				c.setCorrect(completionOptionList);
+			} catch (IOException e) {
+				log.error("", e);
+			}
 			return c;
 		}).collect(Collectors.toList());
 	}
