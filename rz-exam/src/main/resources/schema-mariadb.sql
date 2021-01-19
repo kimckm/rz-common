@@ -39,6 +39,10 @@ values (
   '{A}是TCP传递给IP的数据单元。',
   '[{"code":"A","expected":"分节"}]',
   '2020-12-27 11:53:00'
+), (
+  'Tesco, Asda and Waitrose have become the latest supermarkets to say they will {A} {B} to shoppers who do not wear face masks unless they are medically exempt.',
+  '[{"code":"A","expected":"deny"},{"code":"B","expected":"entry"}]',
+  '2020-12-27 11:53:00'
 )
 ;
 
