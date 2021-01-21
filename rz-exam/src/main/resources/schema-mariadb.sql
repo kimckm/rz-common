@@ -47,6 +47,10 @@ values (
   'TCP有一个{A}(maximum segment size, 最大分节大小), 用于向对端TCP通告对端在每个分节中能发送的最大TCP数据量。',
   '[{"code":"A","expected":"MSS"}]',
   '2020-12-27 11:53:00'
+), (
+  'TCP套接字是一种{A}套接字(stream socket)。TCP关心确认、超时和重传之类的细节。',
+  '[{"code":"A","expected":"流"}]',
+  '2020-12-27 11:53:00'
 )
 ;
 
