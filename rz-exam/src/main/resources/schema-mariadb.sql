@@ -43,6 +43,10 @@ values (
   'Tesco, Asda and Waitrose have become the latest supermarkets to say they will {A} {B} to shoppers who do not wear face masks unless they are medically exempt.',
   '[{"code":"A","expected":"deny"},{"code":"B","expected":"entry"}]',
   '2020-12-27 11:53:00'
+), (
+  'TCP有一个{A}(maximum segment size, 最大分节大小), 用于向对端TCP通告对端在每个分节中能发送的最大TCP数据量。',
+  '[{"code":"A","expected":"MSS"}]',
+  '2020-12-27 11:53:00'
 )
 ;
 
