@@ -1,6 +1,5 @@
 package rz.exam.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -13,9 +12,9 @@ public class CompletionDO {
 	private long id;
 	private String question;
 
-	@TableField("create_at")
 	private LocalDateTime createAt;
 
 	private String correct;
+	private String ext;
 
 }

@@ -8,10 +8,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import rz.exam.mapper.CompletionDoMapper;
 import rz.exam.model.Completion;
 import rz.exam.model.CompletionDO;
 import rz.exam.model.CompletionOption;
+import rz.exam.model.Ext;
 import rz.exam.service.CompletionService;
 
 import java.io.IOException;
@@ -37,6 +39,11 @@ public class CompletionServiceImpl implements CompletionService {
 				ObjectMapper om = new ObjectMapper();
 				List<CompletionOption> completionOptionList = om.readValue(d.getCorrect(), new TypeReference<List<CompletionOption>>() {});
 				c.setCorrect(completionOptionList);
+
+				if (StringUtils.hasLength(d.getExt())) {
+					Ext ext = om.readValue(d.getExt(), Ext.class);
+					c.setExt(ext);
+				}
 			} catch (IOException e) {
 				log.error("", e);
 			}

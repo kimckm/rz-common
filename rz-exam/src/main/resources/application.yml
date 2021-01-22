@@ -13,6 +13,9 @@ spring:
     password: Abcd1234
     platform: mariadb
     initialization-mode: always
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
 
 #eureka:
 #  client:
