@@ -24,10 +24,6 @@ create table t_completion (
 insert into
   t_completion(question, correct, create_at)
 values (
-  '苹果的英文单词是{s}。',
-  '[{"code":"s","expected":"/^apple$/i"}]',
-  '2020-12-27 11:53:00'
-), (
   'TCP传输控制协议(Transmission Control Protocol)，是一个面向{A}的协议，为用户进程提供可靠的{B}字节流。',
   '[{"code":"A","expected":"连接"},{"code":"B","expected":"全双工"}]',
   '2020-12-27 11:53:00'
