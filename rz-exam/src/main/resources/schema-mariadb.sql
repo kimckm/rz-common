@@ -40,7 +40,7 @@ values (
   null,
   '2020-12-27 11:53:00'
 ), (
-  '<p>Tesco, Asda and Waitrose have become the latest supermarkets to say they will {A} {B} to shoppers who do not wear face masks unless they are {C} {D}.</p>It follows a similar move by Morrisons, while Sainsbury\'s says it will {E} those who {F} the rules.Retailers have been {G} for not doing enough to stop people breaking Covid rules as infections spread.',
+  'Tesco, Asda and Waitrose have become the latest supermarkets to say they will {A} {B} to shoppers who do not wear face masks unless they are {C} {D}.It follows a similar move by Morrisons, while Sainsbury\'s says it will {E} those who {F} the rules.Retailers have been {G} for not doing enough to stop people breaking Covid rules as infections spread.',
   '[{"code":"A","expected":"deny"},{"code":"B","expected":"entry"},{"code":"C","expected":"medically"},{"code":"D","expected":"exempt"},{"code":"E","expected":"challenge"},{"code":"F","expected":"flout"},{"code":"G","expected":"criticized"}]',
   '{"audio":[{"name":"朗读版","src":"https://aod.cos.tx.xmcdn.com/storages/3c11-audiofreehighqps/A3/EB/CMCoOSYD2w-nAAPH8gB87foL.m4a"},{"name":"讲解版","src":"https://aod.cos.tx.xmcdn.com/storages/50a6-audiofreehighqps/46/8C/CMCoOScD2w-DAEHczwB87ex5.m4a"}]}',
   '2020-12-27 11:53:00'
