@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 填空题
@@ -17,8 +16,5 @@ public class Completion {
 	private String question;
 
 	private LocalDateTime createAt;
-
-	private Ext ext;
-	private List<CompletionOption> correct;
 
 }

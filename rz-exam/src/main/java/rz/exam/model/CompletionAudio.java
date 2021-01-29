@@ -3,7 +3,7 @@ package rz.exam.model;
 import lombok.Data;
 
 @Data
-public class Audio {
+public class CompletionAudio {
 
 	private String name;
 	private String src;
