@@ -7,25 +7,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rz.exam.model.CompletionAudio;
 import rz.exam.model.CompletionCorrect;
-import rz.exam.service.CompletionCorrectService;
+import rz.exam.service.CompletionAudioService;
 
 import java.util.Objects;
 
-@RequestMapping("/completion_correct")
+@RequestMapping("/completion_audios")
 @RestController
-public class CompletionCorrectController {
+public class CompletionAudioController {
 
 	@Autowired
-	private CompletionCorrectService completionCorrectService;
+	private CompletionAudioService completionAudioService;
 
 	@GetMapping
 	public Object list(@RequestParam(required = false) Long completionId) {
-		LambdaQueryWrapper<CompletionCorrect> query = Wrappers.lambdaQuery(CompletionCorrect.class);
+		LambdaQueryWrapper<CompletionAudio> query = Wrappers.lambdaQuery(CompletionAudio.class);
 		if (Objects.nonNull(completionId)) {
-			query.eq(CompletionCorrect::getCompletionId, completionId);
+			query.eq(CompletionAudio::getCompletionId, completionId);
 		}
-		return completionCorrectService.list(query);
+		return completionAudioService.list(query);
 	}
-}
 
+}

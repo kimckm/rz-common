@@ -5,11 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rz.exam.controller.dto.CompletionSaveDTO;
+import rz.exam.mapper.CompletionAudioMapper;
+import rz.exam.mapper.CompletionCorrectMapper;
 import rz.exam.mapper.CompletionMapper;
 import rz.exam.model.Completion;
+import rz.exam.model.CompletionAudio;
+import rz.exam.model.CompletionCorrect;
 import rz.exam.service.CompletionService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -17,11 +24,38 @@ public class CompletionServiceImpl implements CompletionService {
 
 	@Autowired
 	private CompletionMapper completionMapper;
+	@Autowired
+	private CompletionCorrectMapper completionCorrectMapper;
+	@Autowired
+	private CompletionAudioMapper completionAudioMapper;
 
 	@Transactional(readOnly = true)
 	@Override
 	public List<Completion> list() {
 		return completionMapper.selectList(Wrappers.emptyWrapper());
+	}
+
+	@Transactional
+	@Override
+	public long save(CompletionSaveDTO completionSaveDTO) {
+		completionSaveDTO.setCreateAt(LocalDateTime.now());
+		completionMapper.insert(completionSaveDTO);
+
+		if (Objects.nonNull(completionSaveDTO.getCorrect())) {
+			for (CompletionCorrect completionCorrect : completionSaveDTO.getCorrect()) {
+				completionCorrect.setCompletionId(completionSaveDTO.getId());
+				completionCorrectMapper.insert(completionCorrect);
+			}
+		}
+
+		if (Objects.nonNull(completionSaveDTO.getAudio())) {
+			for (CompletionAudio completionAudio : completionSaveDTO.getAudio()) {
+				completionAudio.setCompletionId(completionSaveDTO.getId());
+				completionAudioMapper.insert(completionAudio);
+			}
+		}
+
+		return completionSaveDTO.getId();
 	}
 
 }

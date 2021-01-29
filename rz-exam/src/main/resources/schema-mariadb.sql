@@ -18,7 +18,6 @@ create table t_completion (
   question varchar(500) comment '题目',
   create_at datetime comment '创建时间'
 ) engine=InnoDB default charset=utf8mb4 comment='填空题';
-insert into t_completion(question) values('ABCD');
 
 drop table if exists t_completion_correct;
 create table t_completion_correct (
@@ -33,5 +32,5 @@ create table t_completion_audio (
  id int primary key auto_increment,
  completion_id int comment '所属填空题',
  name varchar(20) comment '音频名称',
- src varchar(20) comment '资源地址'
+ src varchar(255) comment '资源地址'
 ) engine=InnoDB default charset=utf8mb4 comment='填空题音频表';
