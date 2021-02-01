@@ -7,10 +7,17 @@ create table t_choice (
 
 drop table if exists t_exam;
 create table t_exam (
-  id int primary key,
+  id int primary key auto_increment,
   title varchar(255) comment '考试标题',
   create_at datetime comment '创建时间'
 ) engine=InnoDB default charset=utf8mb4 comment='考试表';
+
+drop table if exists t_exam_question;
+create table t_exam_question (
+  id int primary key auto_increment,
+  exam_id int,
+  question_id int
+) engine=InnoDB default charset=utf8mb4 comment='考试题目表';
 
 drop table if exists t_completion;
 create table t_completion (

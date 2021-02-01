@@ -31,8 +31,6 @@ public class ExamApplication {
 		} catch (Exception e) {
 			log.error("", e);
 		}
-
-
 	}
 
 }
