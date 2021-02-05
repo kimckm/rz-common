@@ -2,8 +2,6 @@ server:
   port: 12276
 
 spring:
-#  profiles:
-#    active: dev
   application:
     name: exam
   datasource:
@@ -12,7 +10,6 @@ spring:
     username: root
     password: Abcd1234
     platform: mariadb
-    initialization-mode: always
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
