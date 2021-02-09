@@ -22,4 +22,12 @@ public class CompletionController {
 		return completionService.save(completionSaveDTO);
 	}
 
+	/**
+	 * TODO 修改数据
+	 */
+	@PatchMapping("/{id}")
+	public Object update() {
+		return null;
+	}
+
 }

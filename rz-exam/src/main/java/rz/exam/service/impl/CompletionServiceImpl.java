@@ -13,6 +13,7 @@ import rz.exam.model.Completion;
 import rz.exam.model.CompletionAudio;
 import rz.exam.model.CompletionCorrect;
 import rz.exam.service.CompletionService;
+import rz.exam.util.SnowFlake;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,12 +39,14 @@ public class CompletionServiceImpl implements CompletionService {
 	@Transactional
 	@Override
 	public long save(CompletionSaveDTO completionSaveDTO) {
+		completionSaveDTO.setId(SnowFlake.generateId());
 		completionSaveDTO.setCreateAt(LocalDateTime.now());
 		completionMapper.insert(completionSaveDTO);
 
 		if (Objects.nonNull(completionSaveDTO.getCorrect())) {
 			for (CompletionCorrect completionCorrect : completionSaveDTO.getCorrect()) {
 				completionCorrect.setCompletionId(completionSaveDTO.getId());
+				completionCorrect.setId(SnowFlake.generateId());
 				completionCorrectMapper.insert(completionCorrect);
 			}
 		}
@@ -51,6 +54,7 @@ public class CompletionServiceImpl implements CompletionService {
 		if (Objects.nonNull(completionSaveDTO.getAudio())) {
 			for (CompletionAudio completionAudio : completionSaveDTO.getAudio()) {
 				completionAudio.setCompletionId(completionSaveDTO.getId());
+				completionAudio.setId(SnowFlake.generateId());
 				completionAudioMapper.insert(completionAudio);
 			}
 		}
