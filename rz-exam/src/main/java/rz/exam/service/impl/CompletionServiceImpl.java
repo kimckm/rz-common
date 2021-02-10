@@ -2,6 +2,7 @@ package rz.exam.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,4 +63,19 @@ public class CompletionServiceImpl implements CompletionService {
 		return completionSaveDTO.getId();
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public CompletionSaveDTO findOne(Long id) {
+		Completion completion = completionMapper.selectById(id);
+
+		CompletionSaveDTO completionSaveDTO = new CompletionSaveDTO();
+		BeanUtils.copyProperties(completion, completionSaveDTO);
+		completionSaveDTO.setCorrect(completionCorrectMapper.selectList(Wrappers.<CompletionCorrect>lambdaQuery()
+			.eq(CompletionCorrect::getCompletionId, id)
+		));
+		completionSaveDTO.setAudio(completionAudioMapper.selectList(Wrappers.<CompletionAudio>lambdaQuery()
+			.eq(CompletionAudio::getCompletionId, id)
+		));
+		return completionSaveDTO;
+	}
 }

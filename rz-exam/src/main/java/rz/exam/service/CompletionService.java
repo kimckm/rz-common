@@ -11,4 +11,6 @@ public interface CompletionService {
 
 	long save(CompletionSaveDTO completionSaveDTO);
 
+	CompletionSaveDTO findOne(Long id);
+
 }

@@ -17,6 +17,11 @@ public class CompletionController {
 		return completionService.list();
 	}
 
+	@GetMapping("/{id}")
+	public Object findOne(@PathVariable Long id) {
+		return completionService.findOne(id);
+	}
+
 	@PostMapping
 	public Object save(@RequestBody CompletionSaveDTO completionSaveDTO) {
 		return completionService.save(completionSaveDTO);
