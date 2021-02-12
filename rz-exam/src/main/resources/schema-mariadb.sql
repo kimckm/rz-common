@@ -5,15 +5,15 @@ create table t_choice (
 ) engine=InnoDB default charset=utf8mb4 comment='选择题';
 
 create table t_exam (
-  id int primary key auto_increment,
+  id bigint unsigned primary key,
   title varchar(255) comment '考试标题',
   create_at datetime comment '创建时间'
 ) engine=InnoDB default charset=utf8mb4 comment='考试表';
 
 create table t_exam_question (
-  id int primary key auto_increment,
-  exam_id int,
-  question_id int
+  id bigint unsigned primary key,
+  exam_id bigint,
+  question_id bigint
 ) engine=InnoDB default charset=utf8mb4 comment='考试题目表';
 
 create table t_completion (

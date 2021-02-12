@@ -8,4 +8,6 @@ public interface ExamService extends IService<Exam> {
 
 	long insertOne(ExamSaveDTO examSaveDTO);
 
+	ExamSaveDTO findOne(Long id);
+
 }

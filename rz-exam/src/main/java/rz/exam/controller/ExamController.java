@@ -21,7 +21,7 @@ public class ExamController {
 
 	@GetMapping("/{id}")
 	public Object findOne(@PathVariable Long id) {
-		return examService.getById(id);
+		return examService.findOne(id);
 	}
 
 	@PostMapping

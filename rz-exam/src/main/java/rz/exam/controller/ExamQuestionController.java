@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rz.exam.model.ExamQuestion;
 import rz.exam.service.ExamQuestionService;
+import rz.exam.util.SnowFlake;
 
 import java.util.Objects;
 
@@ -29,6 +27,13 @@ public class ExamQuestionController {
 		}
 
 		return examQuestionService.list(query);
+	}
+
+	@PostMapping
+	public Object saveOne(@RequestBody ExamQuestion examQuestion) {
+		examQuestion.setId(SnowFlake.generateId());
+		examQuestionService.save(examQuestion);
+		return examQuestion.getId();
 	}
 
 }
