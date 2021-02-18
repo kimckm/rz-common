@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import rz.exam.controller.dto.ExamSaveDTO;
 import rz.exam.mapper.ExamMapper;
 import rz.exam.mapper.ExamQuestionMapper;
@@ -31,6 +32,11 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
 		examSaveDTO.setCreateAt(LocalDateTime.now());
 		examSaveDTO.setId(SnowFlake.generateId());
 		examMapper.insert(examSaveDTO);
+
+		if (CollectionUtils.isEmpty(examSaveDTO.getQuestions())) {
+			return examSaveDTO.getId();
+		}
+
 		for (ExamQuestion examQuestion: examSaveDTO.getQuestions()) {
 			examQuestion.setExamId(examSaveDTO.getId());
 			examQuestion.setId(SnowFlake.generateId());
