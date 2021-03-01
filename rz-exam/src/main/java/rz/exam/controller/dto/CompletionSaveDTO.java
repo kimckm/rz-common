@@ -15,4 +15,6 @@ public class CompletionSaveDTO extends Completion {
 	private List<CompletionCorrect> correct;
 	private List<CompletionAudio> audio;
 
+	private Long examId;
+
 }

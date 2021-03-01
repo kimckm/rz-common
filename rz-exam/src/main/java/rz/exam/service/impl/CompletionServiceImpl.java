@@ -7,12 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rz.exam.controller.dto.CompletionSaveDTO;
-import rz.exam.mapper.CompletionAudioMapper;
-import rz.exam.mapper.CompletionCorrectMapper;
-import rz.exam.mapper.CompletionMapper;
-import rz.exam.model.Completion;
-import rz.exam.model.CompletionAudio;
-import rz.exam.model.CompletionCorrect;
+import rz.exam.mapper.*;
+import rz.exam.model.*;
 import rz.exam.service.CompletionService;
 import rz.exam.util.SnowFlake;
 
@@ -30,6 +26,10 @@ public class CompletionServiceImpl implements CompletionService {
 	private CompletionCorrectMapper completionCorrectMapper;
 	@Autowired
 	private CompletionAudioMapper completionAudioMapper;
+	@Autowired
+	private ExamMapper examMapper;
+	@Autowired
+	private ExamQuestionMapper examQuestionMapper;
 
 	@Transactional(readOnly = true)
 	@Override
@@ -58,6 +58,18 @@ public class CompletionServiceImpl implements CompletionService {
 				completionAudio.setId(SnowFlake.generateId());
 				completionAudioMapper.insert(completionAudio);
 			}
+		}
+
+		if (Objects.nonNull(completionSaveDTO.getExamId())) {
+			Exam exam = examMapper.selectById(completionSaveDTO.getExamId());
+			if (Objects.isNull(exam)) {
+				throw new IllegalArgumentException("examId无效!");
+			}
+			ExamQuestion examQuestion = new ExamQuestion();
+			examQuestion.setId(SnowFlake.generateId());
+			examQuestion.setExamId(exam.getId());
+			examQuestion.setQuestionId(completionSaveDTO.getId());
+			examQuestionMapper.insert(examQuestion);
 		}
 
 		return completionSaveDTO.getId();
