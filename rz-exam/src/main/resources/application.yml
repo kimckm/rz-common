@@ -9,10 +9,10 @@ spring:
     name: exam
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://8.135.66.238:3306/exam
+    url: jdbc:mariadb://8.135.66.238:3306/exam
     username: root
     password: Abcd1234
-#    platform: mariadb
+    platform: mariadb
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
