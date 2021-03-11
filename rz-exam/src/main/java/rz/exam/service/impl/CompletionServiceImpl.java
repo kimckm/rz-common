@@ -34,7 +34,10 @@ public class CompletionServiceImpl implements CompletionService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Completion> list() {
-		return completionMapper.selectList(Wrappers.emptyWrapper());
+		return completionMapper.selectList(
+			Wrappers.lambdaQuery(Completion.class)
+				.orderByDesc(Completion::getCreateAt)
+		);
 	}
 
 	@Transactional
