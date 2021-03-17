@@ -23,6 +23,11 @@ mybatis-plus:
     db-config:
       table-prefix: t_
 
+management:
+  endpoint:
+    health:
+      show-details: always
+
 #eureka:
 #  client:
 #    register-with-eureka: false
