@@ -1,6 +1,7 @@
 package rz.exam.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,8 @@ import java.util.Objects;
 
 @Slf4j
 @Service
-public class CompletionServiceImpl implements CompletionService {
+public class CompletionServiceImpl extends ServiceImpl<CompletionMapper, Completion> implements CompletionService {
 
-	@Autowired
-	private CompletionMapper completionMapper;
 	@Autowired
 	private CompletionCorrectMapper completionCorrectMapper;
 	@Autowired
@@ -31,21 +30,12 @@ public class CompletionServiceImpl implements CompletionService {
 	@Autowired
 	private ExamQuestionMapper examQuestionMapper;
 
-	@Transactional(readOnly = true)
-	@Override
-	public List<Completion> list() {
-		return completionMapper.selectList(
-			Wrappers.lambdaQuery(Completion.class)
-				.orderByDesc(Completion::getCreateAt)
-		);
-	}
-
 	@Transactional
 	@Override
 	public long save(CompletionSaveDTO completionSaveDTO) {
 		completionSaveDTO.setId(SnowFlake.generateId());
 		completionSaveDTO.setCreateAt(LocalDateTime.now());
-		completionMapper.insert(completionSaveDTO);
+		this.getBaseMapper().insert(completionSaveDTO);
 
 		if (Objects.nonNull(completionSaveDTO.getCorrect())) {
 			for (CompletionCorrect completionCorrect : completionSaveDTO.getCorrect()) {
@@ -81,7 +71,7 @@ public class CompletionServiceImpl implements CompletionService {
 	@Transactional(readOnly = true)
 	@Override
 	public CompletionSaveDTO findOne(Long id) {
-		Completion completion = completionMapper.selectById(id);
+		Completion completion = this.getBaseMapper().selectById(id);
 
 		CompletionSaveDTO completionSaveDTO = new CompletionSaveDTO();
 		BeanUtils.copyProperties(completion, completionSaveDTO);

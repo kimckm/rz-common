@@ -1,13 +1,10 @@
 package rz.exam.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import rz.exam.controller.dto.CompletionSaveDTO;
 import rz.exam.model.Completion;
 
-import java.util.List;
-
-public interface CompletionService {
-
-	List<Completion> list();
+public interface CompletionService extends IService<Completion> {
 
 	long save(CompletionSaveDTO completionSaveDTO);
 
