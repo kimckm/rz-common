@@ -3,10 +3,14 @@ package rz.exam.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import rz.exam.service.ExamQuestionService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,19 +49,8 @@ public class PracticeController {
 	private CompletionCorrectService completionCorrectService;
 	@Autowired
 	private ExamQuestionService examQuestionService;
-
-	private static final ObjectMapper objectMapper = new ObjectMapper();
-
-	public static void main(String[] args) {
-		try {
-			CompletionSaveDTO completionSaveDTO = new CompletionSaveDTO();
-			completionSaveDTO.setCreateAt(LocalDateTime.now());
-			String json = objectMapper.writeValueAsString(completionSaveDTO);
-			log.info("json={}", json);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	/**
 	 * 随机抽题。
@@ -98,6 +92,9 @@ public class PracticeController {
 		ids.removeAll(cacheCompletionSaveDTOList.stream().map(CompletionSaveDTO::getId).collect(Collectors.toList()));
 
 		List<Object> rsList = new ArrayList<>(cacheCompletionSaveDTOList);
+		if (CollectionUtils.isEmpty(ids)) {
+			return rsList;
+		}
 
 		List<Completion> completions = completionService.listByIds(ids);
 		List<CompletionSaveDTO> completionSaveDTOList = completions.stream()
@@ -111,7 +108,8 @@ public class PracticeController {
 			})
 			.peek(dto -> {
 				try {
-					stringRedisTemplate.opsForValue().set("question::" + dto.getId(), objectMapper.writeValueAsString(dto));
+					String questionKey = String.format("question::%s", dto.getId());
+					stringRedisTemplate.opsForValue().set(questionKey, objectMapper.writeValueAsString(dto), 3, TimeUnit.HOURS);
 				} catch (Exception e) {
 					log.error("", e);
 				}
