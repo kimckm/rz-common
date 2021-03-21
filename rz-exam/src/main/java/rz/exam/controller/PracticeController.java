@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -69,13 +70,13 @@ public class PracticeController {
 			stringRedisTemplate.expire(examKey, 60, TimeUnit.MINUTES);
 		}
 
-		List<String> completionIdList = stringRedisTemplate.opsForSet().randomMembers(examKey, sum);
-		List<String> questionKeyList = completionIdList.stream()
+		Set<String> completionIdSet = stringRedisTemplate.opsForSet().distinctRandomMembers(examKey, sum);
+		List<String> questionKeyList = completionIdSet.stream()
 			.map(id -> String.format("question::%s", id))
 			.collect(Collectors.toList());
 		List<String> cacheCompletionList = stringRedisTemplate.opsForValue().multiGet(questionKeyList);
 
-		List<Long> ids = completionIdList.stream()
+		List<Long> ids = completionIdSet.stream()
 			.map(Long::valueOf)
 			.collect(Collectors.toList());
 
