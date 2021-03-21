@@ -3,8 +3,8 @@ server:
 
 info:
   app:
-    name: @project.name@
-    version: @project.version@
+    name: '@project.name@'
+    version: '@project.version@'
 
 spring:
   application:
@@ -15,6 +15,9 @@ spring:
     username: root
     password: Abcd1234
     platform: mariadb
+  redis:
+    host: 8.135.66.238
+    password: abc123
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
