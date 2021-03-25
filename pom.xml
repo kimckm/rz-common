@@ -20,6 +20,7 @@
         <module>rz-eureka</module>
         <module>rz-gateway</module>
         <module>rz-config</module>
+        <module>rz-admin</module>
         <module>rz-auth</module>
         <module>rz-web</module>
         <module>rz-pure</module>
