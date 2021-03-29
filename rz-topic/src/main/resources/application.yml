@@ -1,0 +1,41 @@
+server:
+  port: 12277
+
+info:
+  app:
+    name: '@project.name@'
+    version: '@project.version@'
+
+spring:
+  application:
+    name: topic
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://8.135.66.238:3306/exam
+    username: root
+    password: Abcd1234
+    platform: mariadb
+  redis:
+    host: 8.135.66.238
+    password: abc123
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: t_
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://8.135.66.238:8761/eureka/

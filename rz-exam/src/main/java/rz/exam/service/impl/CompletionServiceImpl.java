@@ -34,7 +34,7 @@ public class CompletionServiceImpl extends ServiceImpl<CompletionMapper, Complet
 	@Override
 	public long save(CompletionSaveDTO completionSaveDTO) {
 		completionSaveDTO.setId(SnowFlake.generateId());
-		completionSaveDTO.setCreateAt(LocalDateTime.now());
+		completionSaveDTO.setCreatedAt(LocalDateTime.now());
 		this.getBaseMapper().insert(completionSaveDTO);
 
 		if (Objects.nonNull(completionSaveDTO.getCorrect())) {

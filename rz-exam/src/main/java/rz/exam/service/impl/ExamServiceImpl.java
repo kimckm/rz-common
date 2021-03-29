@@ -29,7 +29,7 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
 	@Transactional
 	@Override
 	public long insertOne(ExamSaveDTO examSaveDTO) {
-		examSaveDTO.setCreateAt(LocalDateTime.now());
+		examSaveDTO.setCreatedAt(LocalDateTime.now());
 		examSaveDTO.setId(SnowFlake.generateId());
 		examMapper.insert(examSaveDTO);
 
