@@ -36,7 +36,7 @@ public class CompletionController {
 		IPage<Completion> page = completionService.page(
 			new Page<>(pageQueryDTO.getCurrent(), pageQueryDTO.getSize()),
 			Wrappers.lambdaQuery(Completion.class)
-				.orderByDesc(Completion::getCreateAt)
+				.orderByDesc(Completion::getCreatedAt)
 		);
 		return new PageResultDTO<Completion>()
 			.list(page.getRecords())
