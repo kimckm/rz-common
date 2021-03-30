@@ -21,7 +21,6 @@
         <module>rz-gateway</module>
         <module>rz-config</module>
         <module>rz-admin</module>
-        <module>rz-order</module>
         <module>rz-exam</module>
         <module>rz-topic</module>
     </modules>
