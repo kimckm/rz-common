@@ -4,11 +4,29 @@ server:
 spring:
   application:
     name: gateway
-  profiles:
-    active: dev
+  cloud:
+    gateway:
+      routes:
+        - id: completions
+          uri: lb:exam
+          predicates:
+            - Path=/completions/**
+        - id: exams
+          uri: lb:exam
+          predicates:
+            - Path=/exams/**
+        - id: topics
+          uri: lb:topic
+          predicates:
+            - Path=/topics/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://8.135.66.238:8761/eureka/
 
 management:
   endpoints:
     web:
       exposure:
-        include: gateway
+        include: '*'
