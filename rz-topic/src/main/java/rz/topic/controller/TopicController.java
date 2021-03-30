@@ -28,7 +28,7 @@ public class TopicController {
 	}
 
 	@GetMapping
-	public Object find(@RequestParam PageQueryDTO pageQueryDTO) {
+	public Object find(PageQueryDTO pageQueryDTO) {
 		IPage<Topic> page = topicService.page(
 			new Page<>(pageQueryDTO.getCurrent(), pageQueryDTO.getSize()),
 			Wrappers.lambdaQuery(Topic.class)
