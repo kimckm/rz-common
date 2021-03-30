@@ -10,6 +10,7 @@ import rz.topic.controller.dto.PageQueryDTO;
 import rz.topic.controller.dto.PageResultDTO;
 import rz.topic.model.Topic;
 import rz.topic.service.TopicService;
+import rz.topic.util.SnowFlake;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class TopicController {
 
 	@PostMapping
 	public Object saveOne(@RequestBody Topic topic) {
+		topic.setId(SnowFlake.generateId());
 		topic.setCreatedAt(LocalDateTime.now());
 		return topicService.save(topic);
 	}

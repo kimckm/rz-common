@@ -15,6 +15,10 @@ spring:
           uri: lb://exam
           predicates:
             - Path=/exams/**
+        - id: practice
+          uri: lb://exam
+          predicates:
+            - Path=/practice/**
         - id: topics
           uri: lb://topic
           predicates:
