@@ -1,4 +1,4 @@
-package rz.exam;
+package rz.topic;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
@@ -16,10 +16,10 @@ import java.time.format.DateTimeFormatter;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class ExamApplication {
+public class TopicApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExamApplication.class);
+		SpringApplication.run(TopicApplication.class, args);
 	}
 
 	@Bean
