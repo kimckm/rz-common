@@ -11,4 +11,6 @@ public class PageQueryDTO {
 	private long size = 10;
 	private long current = 1;
 
+	private boolean pagination = true;
+
 }

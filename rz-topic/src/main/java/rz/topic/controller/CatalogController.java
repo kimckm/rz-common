@@ -1,5 +1,6 @@
 package rz.topic.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,6 +13,8 @@ import rz.topic.model.Catalog;
 import rz.topic.service.CatalogService;
 import rz.topic.util.SnowFlake;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @RequestMapping("/catalogs")
@@ -30,16 +33,19 @@ public class CatalogController {
 
 	@GetMapping
 	public Object find(CatalogPageQueryDTO pageQueryDTO) {
-		IPage<Catalog> page = catalogService.page(
-			new Page<>(pageQueryDTO.getCurrent(), pageQueryDTO.getSize()),
-			Wrappers.lambdaQuery(Catalog.class)
-				.eq(Objects.nonNull(pageQueryDTO.getTopicId()), Catalog::getTopicId, pageQueryDTO.getTopicId())
-		);
-		return new PageResultDTO<Catalog>()
-			.list(page.getRecords())
-			.current(page.getCurrent())
-			.size(page.getSize())
-			.total(page.getTotal());
+		LambdaQueryWrapper<Catalog> query = Wrappers.lambdaQuery(Catalog.class)
+			.eq(Objects.nonNull(pageQueryDTO.getTopicId()), Catalog::getTopicId, pageQueryDTO.getTopicId());
+		if (pageQueryDTO.isPagination()) {
+			IPage<Catalog> page = catalogService.page(
+				new Page<>(pageQueryDTO.getCurrent(), pageQueryDTO.getSize()),
+				query
+			);
+			return new PageResultDTO<Catalog>()
+				.list(page.getRecords())
+				.current(page.getCurrent())
+				.size(page.getSize())
+				.total(page.getTotal());
+		}
+		return catalogService.list(query);
 	}
-
 }
