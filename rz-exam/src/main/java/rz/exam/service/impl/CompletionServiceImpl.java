@@ -29,6 +29,8 @@ public class CompletionServiceImpl extends ServiceImpl<CompletionMapper, Complet
 	private ExamMapper examMapper;
 	@Autowired
 	private ExamQuestionMapper examQuestionMapper;
+	@Autowired
+	private CatalogQuestionMapper catalogQuestionMapper;
 
 	@Transactional
 	@Override
@@ -63,6 +65,14 @@ public class CompletionServiceImpl extends ServiceImpl<CompletionMapper, Complet
 			examQuestion.setExamId(exam.getId());
 			examQuestion.setQuestionId(completionSaveDTO.getId());
 			examQuestionMapper.insert(examQuestion);
+		}
+
+		if (Objects.nonNull(completionSaveDTO.getCatalogId())) {
+			CatalogQuestion catalogQuestion = new CatalogQuestion();
+			catalogQuestion.setId(SnowFlake.generateId());
+			catalogQuestion.setCatalogId(completionSaveDTO.getCatalogId());
+			catalogQuestion.setQuestionId(completionSaveDTO.getId());
+			catalogQuestionMapper.insert(catalogQuestion);
 		}
 
 		return completionSaveDTO.getId();

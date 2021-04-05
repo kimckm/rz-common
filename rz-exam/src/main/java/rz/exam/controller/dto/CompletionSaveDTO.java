@@ -16,5 +16,6 @@ public class CompletionSaveDTO extends Completion {
 	private List<CompletionAudio> audio;
 
 	private Long examId;
+	private Long catalogId;
 
 }
