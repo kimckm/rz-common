@@ -30,11 +30,6 @@ spring:
           predicates:
             - Path=/catalogs/**
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://8.135.66.238:8761/eureka/
-
 management:
   endpoints:
     web:
