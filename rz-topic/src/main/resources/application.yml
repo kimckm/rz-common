@@ -9,15 +9,6 @@ info:
 spring:
   application:
     name: topic
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://8.135.66.238:3306/exam
-    username: root
-    password: Abcd1234
-    platform: mariadb
-  redis:
-    host: 8.135.66.238
-    password: abc123
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -34,8 +25,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://8.135.66.238:8761/eureka/
