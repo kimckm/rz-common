@@ -9,6 +9,8 @@ info:
 spring:
   application:
     name: exam
+  profiles:
+    active: dev
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

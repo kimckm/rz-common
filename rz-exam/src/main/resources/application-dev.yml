@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/exam
+    username: root
+    password: Abcd1234
+    platform: mariadb
+  redis:
+    host: localhost
+    password: abc123

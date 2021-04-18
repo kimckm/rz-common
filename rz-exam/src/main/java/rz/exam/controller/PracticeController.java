@@ -37,6 +37,8 @@ public class PracticeController {
 	@Autowired
 	private CompletionService completionService;
 	@Autowired
+	private ChoiceService choiceService;
+	@Autowired
 	private CompletionCorrectService completionCorrectService;
 	@Autowired
 	private ExamQuestionService examQuestionService;
@@ -57,6 +59,10 @@ public class PracticeController {
 	 */
 	@GetMapping("/random")
 	public Object random(Long examId, Long topicId, @RequestParam(defaultValue = "10") Long sum) {
+		if (Objects.isNull(examId) && Objects.isNull(topicId)) {
+			return allRandom(sum);
+		}
+
 		if (Objects.nonNull(topicId)) {
 			return topicRandom(topicId, sum);
 		}
@@ -70,6 +76,75 @@ public class PracticeController {
 		}
 
 		Set<String> completionIdSet = stringRedisTemplate.opsForSet().distinctRandomMembers(examKey, sum);
+		List<String> questionKeyList = completionIdSet.stream()
+			.map(id -> String.format("question::%s", id))
+			.collect(Collectors.toList());
+		List<String> cacheCompletionList = stringRedisTemplate.opsForValue().multiGet(questionKeyList);
+
+		List<Long> ids = completionIdSet.stream()
+			.map(Long::valueOf)
+			.collect(Collectors.toList());
+
+		List<CompletionSaveDTO> cacheCompletionSaveDTOList = cacheCompletionList.stream()
+			.filter(StringUtils::hasLength)
+			.map(str -> {
+				try {
+					return objectMapper.readValue(str, CompletionSaveDTO.class);
+				} catch (IOException e) {
+					log.error("", e);
+				}
+				return null;
+			}).collect(Collectors.toList());
+		ids.removeAll(cacheCompletionSaveDTOList.stream().map(CompletionSaveDTO::getId).collect(Collectors.toList()));
+
+		List<Object> rsList = new ArrayList<>(cacheCompletionSaveDTOList);
+		if (CollectionUtils.isEmpty(ids)) {
+			return rsList;
+		}
+
+		List<Completion> completions = completionService.listByIds(ids);
+		List<CompletionSaveDTO> completionSaveDTOList = completions.stream()
+			.map(completion -> {
+				CompletionSaveDTO dto = new CompletionSaveDTO();
+				BeanUtils.copyProperties(completion, dto);
+				dto.setCorrect(completionCorrectService.list(Wrappers.<CompletionCorrect>lambdaQuery()
+					.eq(CompletionCorrect::getCompletionId, completion.getId())
+				));
+				return dto;
+			})
+			.peek(dto -> {
+				try {
+					String questionKey = String.format("question::%s", dto.getId());
+					stringRedisTemplate.opsForValue().set(questionKey, objectMapper.writeValueAsString(dto), 3, TimeUnit.HOURS);
+				} catch (Exception e) {
+					log.error("", e);
+				}
+			})
+			.collect(Collectors.toList());
+		rsList.addAll(completionSaveDTOList);
+
+		return rsList;
+	}
+
+	/**
+	 * 全范围随机抽题
+	 */
+	private Object allRandom(Long sum) {
+		String allKey = "all::question";
+		if (!stringRedisTemplate.hasKey(allKey)) {
+			completionService.list(Wrappers.lambdaQuery(Completion.class)
+				.select(Completion::getId)
+			).forEach(eq -> stringRedisTemplate.opsForSet().add(allKey, String.valueOf(eq.getId())));
+
+			// TODO
+//			choiceService.list(Wrappers.lambdaQuery(Choice.class)
+//				.select(Choice::getId)
+//			).forEach(eq -> stringRedisTemplate.opsForSet().add(allKey, String.valueOf(eq.getId())));
+
+			stringRedisTemplate.expire(allKey, 60, TimeUnit.MINUTES);
+		}
+
+		Set<String> completionIdSet = stringRedisTemplate.opsForSet().distinctRandomMembers(allKey, sum);
 		List<String> questionKeyList = completionIdSet.stream()
 			.map(id -> String.format("question::%s", id))
 			.collect(Collectors.toList());
