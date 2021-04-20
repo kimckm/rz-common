@@ -43,7 +43,6 @@ public class ChoiceController {
 
 	@PostMapping
 	public Object save(@RequestBody ChoiceSaveDTO choiceSaveDTO) {
-		choiceSaveDTO.setCreatedAt(LocalDateTime.now());
 		return choiceService.save(choiceSaveDTO);
 	}
 
