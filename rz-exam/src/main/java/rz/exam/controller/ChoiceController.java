@@ -13,6 +13,7 @@ import rz.exam.model.Choice;
 import rz.exam.service.ChoiceService;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @RequestMapping("/choices")
 @RestController
@@ -44,6 +45,16 @@ public class ChoiceController {
 	@PostMapping
 	public Object save(@RequestBody ChoiceSaveDTO choiceSaveDTO) {
 		return choiceService.save(choiceSaveDTO);
+	}
+
+	@DeleteMapping("/{id}")
+	public Object deleteOne(@PathVariable Long id) {
+		if (Objects.isNull(id)) {
+			return false;
+		}
+
+		choiceService.deleteOne(id);
+		return true;
 	}
 
 }

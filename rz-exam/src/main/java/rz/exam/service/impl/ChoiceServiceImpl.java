@@ -1,8 +1,10 @@
 package rz.exam.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rz.exam.controller.dto.ChoiceSaveDTO;
 import rz.exam.mapper.ChoiceMapper;
 import rz.exam.mapper.ChoiceOptionMapper;
@@ -19,6 +21,7 @@ public class ChoiceServiceImpl extends ServiceImpl<ChoiceMapper, Choice> impleme
 	@Autowired
 	private ChoiceOptionMapper choiceOptionMapper;
 
+	@Transactional
 	@Override
 	public long save(ChoiceSaveDTO choiceSaveDTO) {
 		choiceSaveDTO.setCreatedAt(LocalDateTime.now());
@@ -34,6 +37,18 @@ public class ChoiceServiceImpl extends ServiceImpl<ChoiceMapper, Choice> impleme
 		}
 
 		return choiceSaveDTO.getId();
+	}
+
+	@Transactional
+	@Override
+	public void deleteOne(Long id) {
+		if (Objects.isNull(id)) {
+			return;
+		}
+		choiceOptionMapper.delete(Wrappers.lambdaQuery(ChoiceOption.class)
+			.eq(ChoiceOption::getChoiceId, id)
+		);
+		this.baseMapper.deleteById(id);
 	}
 
 }

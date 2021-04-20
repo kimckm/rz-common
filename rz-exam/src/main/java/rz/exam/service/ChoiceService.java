@@ -8,4 +8,6 @@ public interface ChoiceService extends IService<Choice> {
 
 	long save(ChoiceSaveDTO choiceSaveDTO);
 
+	void deleteOne(Long id);
+
 }
