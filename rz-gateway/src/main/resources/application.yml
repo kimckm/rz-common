@@ -7,32 +7,14 @@ spring:
   cloud:
     gateway:
       routes:
-        # exam服务
-        - id: completions
+        - id: exam
           uri: lb://exam
           predicates:
-            - Path=/completions/**
-        - id: choices
-          uri: lb://exam
-          predicates:
-            - Path=/choices/**
-        - id: exams
-          uri: lb://exam
-          predicates:
-            - Path=/exams/**
-        - id: practice
-          uri: lb://exam
-          predicates:
-            - Path=/practice/**
-        # topic服务
-        - id: topics
+            - Path=/completions/**,/choices/**,/exams/**,/practice/**
+        - id: topic
           uri: lb://topic
           predicates:
-            - Path=/topics/**
-        - id: catalogs
-          uri: lb://topic
-          predicates:
-            - Path=/catalogs/**
+            - Path=/topics/**,/catalogs/**
 
 eureka:
   client:
