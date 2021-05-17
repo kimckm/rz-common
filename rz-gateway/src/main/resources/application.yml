@@ -34,6 +34,11 @@ spring:
           predicates:
             - Path=/catalogs/**
 
+eureka:
+  client:
+    # 每隔5秒刷新服务信息
+    registry-fetch-interval-seconds: 5
+
 management:
   endpoints:
     web:
