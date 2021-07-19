@@ -85,11 +85,11 @@ public class CompletionController {
 	}
 
 	/**
-	 * TODO 修改数据
+	 * 修改数据
 	 */
 	@PatchMapping("/{id}")
-	public Object update() {
-		return null;
+	public Object update(@PathVariable Long id, @RequestBody CompletionSaveDTO completionSaveDTO) {
+		return completionService.updateById(id, completionSaveDTO);
 	}
 
 }

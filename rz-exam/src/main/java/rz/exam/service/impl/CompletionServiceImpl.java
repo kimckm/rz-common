@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StreamUtils;
 import rz.exam.controller.dto.CompletionSaveDTO;
 import rz.exam.mapper.*;
 import rz.exam.model.*;
@@ -92,5 +94,26 @@ public class CompletionServiceImpl extends ServiceImpl<CompletionMapper, Complet
 			.eq(CompletionAudio::getCompletionId, id)
 		));
 		return completionSaveDTO;
+	}
+
+	@Transactional
+	@Override
+	public boolean updateById(Long id, CompletionSaveDTO completionSaveDTO) {
+		completionSaveDTO.setId(id);
+
+		if (Objects.nonNull(completionSaveDTO.getCorrect())) {
+			completionSaveDTO.getCorrect()
+				.forEach(c -> {
+					if (c.getId() > 0) {
+						completionCorrectMapper.updateById(c);
+					} else {
+						c.setId(SnowFlake.generateId());
+						c.setCompletionId(id);
+						completionCorrectMapper.insert(c);
+					}
+				});
+		}
+
+		return this.updateById(completionSaveDTO);
 	}
 }

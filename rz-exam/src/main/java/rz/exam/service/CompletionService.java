@@ -10,4 +10,6 @@ public interface CompletionService extends IService<Completion> {
 
 	CompletionSaveDTO findOne(Long id);
 
+	boolean updateById(Long id, CompletionSaveDTO completionSaveDTO);
+
 }
